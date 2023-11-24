@@ -11,66 +11,13 @@ import Swal from 'sweetalert2';
 })
 export class EditarComponent implements OnInit {
   pedido: Pedido = new Pedido(" ", " ", 0);
+  datosOriginales: Pedido = new Pedido(" ", " ", 0);
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private pedidosService: PedidosService
   ) {}
-    //No olvides instalarlo antes de querer usarlo npm install sweetalert2
-    editarPedido(pedido: Pedido) {
-      // Almacena los valores originales antes de la edición
-      const nombreOriginal = pedido.nombre;
-      const precioOriginal = pedido.precio;
-    
-      Swal.fire({
-        title: '¿Estás seguro?',
-        text: `¿Realmente quieres editar a ${pedido.nombre}?`,
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, editar',
-        cancelButtonText: 'Cancelar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // Si el usuario hace clic en "Sí, editar", muestra el contenido personalizado dentro del mismo cuadro de diálogo
-          Swal.fire({
-            title: '¿Quieres guardar los cambios?',
-            html: `
-              <p>Nombre original: ${nombreOriginal}</p>
-              <p>Nombre nuevo: ${pedido.nombre !== nombreOriginal ? pedido.nombre : 'Sin cambios'}</p>
-              <p>Tamaño: ${pedido.size}</p>
-              <p>Precio original: ${precioOriginal}</p>
-              <p>Precio nuevo: ${pedido.precio !== precioOriginal ? pedido.precio : 'Sin cambios'}</p>
-            `,
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, guardar',
-            cancelButtonText: 'No, cancelar'
-          }).then((saveResult) => {
-            if (saveResult.isConfirmed) {
-              // Si el usuario hace clic en "Sí, guardar", procede con la edición
-              this.pedidosService.updatePedido(pedido).subscribe(() => {
-                console.log('Pedido editado correctamente');
-                this.volver();  // Redirige a la página de menú después de la edición
-              });
-            } else if (saveResult.dismiss !== Swal.DismissReason.cancel) {
-              // Si el usuario cierra el cuadro de diálogo de una manera diferente a hacer clic en "Cancelar"
-              console.log('Edición cancelada por el usuario');
-              // No redirigir, ya que el usuario ha cancelado la edición
-            }
-          });
-        } else if (result.dismiss !== Swal.DismissReason.cancel) {
-          // Si el usuario cierra el primer cuadro de diálogo de una manera diferente a hacer clic en "Cancelar"
-          console.log('Edición cancelada por el usuario');
-          // No redirigir, ya que el usuario ha cancelado la edición
-        }
-      });
-    }
-    
 
   ngOnInit() {
     let idPedido: string | null = this.route.snapshot.paramMap.get("id");
@@ -82,7 +29,8 @@ export class EditarComponent implements OnInit {
         (pedido: Pedido) => {
           console.log('Respuesta de la solicitud:', pedido);
           if (pedido) {
-            this.pedido = pedido;
+            this.pedido = { ...pedido };
+            this.datosOriginales = { ...pedido };
           } else {
             console.error("No se encontró el pedido");
           }
@@ -92,6 +40,49 @@ export class EditarComponent implements OnInit {
         }
       );
     }
+  }
+
+  editarPedido(pedido: Pedido) {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: `¿Realmente quieres editar a ${pedido.nombre}?`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, editar',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Editar Pedido',
+          html: `
+            <p>Nombre original: ${this.datosOriginales.nombre}</p>
+            <p>Nuevo nombre: ${pedido.nombre !== this.datosOriginales.nombre ? pedido.nombre : 'Sin cambios'}</p>
+            <p>Tamaño: ${this.datosOriginales.size}</p>
+            <p>Precio original: ${this.datosOriginales.precio}</p>
+            <p>Nuevo precio: ${pedido.precio !== this.datosOriginales.precio ? pedido.precio : 'Sin cambios'}</p>
+          `,
+          icon: 'question',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sí, guardar',
+          cancelButtonText: 'Cancelar'
+        }).then((saveResult) => {
+          if (saveResult.isConfirmed) {
+            this.pedidosService.updatePedido(pedido).subscribe(() => {
+              console.log('Pedido editado correctamente');
+              this.volver();
+            });
+          } else if (saveResult.dismiss !== Swal.DismissReason.cancel) {
+            console.log('Edición cancelada por el usuario');
+          }
+        });
+      } else if (result.dismiss !== Swal.DismissReason.cancel) {
+        console.log('Edición cancelada por el usuario');
+      }
+    });
   }
 
   volver() {
