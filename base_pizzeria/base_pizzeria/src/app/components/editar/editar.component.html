@@ -1,0 +1,23 @@
+<h2>Editar Producto</h2>
+<form (ngSubmit)="onSubmit()" #formPedido="ngForm">
+    
+
+    <label>Editar Nombre:
+        <input name="nombre" [(ngModel)]="pedido.nombre">
+    </label>
+
+    <label>Tamaño
+        <input name="size" [(ngModel)]="pedido.size" type="text" disabled>
+    </label>
+
+    <label>Editar Precio:
+        <input name="precio" [(ngModel)]="pedido.precio" type="number">
+    </label>
+
+    <p>
+        <button (click)="editarPedido(pedido)"type="submit" class="guardar-btn">Guardar</button>
+    </p>
+    <p>
+        <button (click)="volver()" type="button" class="volver-btn">Volver</button>
+    </p>
+</form>

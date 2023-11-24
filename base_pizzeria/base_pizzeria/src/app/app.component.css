@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Gabarito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&display=swap');
+
+@font-face {
+    font-family: ANDYB;
+    src: url(../assets/fonts/ANDYB.TTF);
+}
+.terr{
+    font-family: ANDYB;
+}
+.navbar{
+    background-color: #48ccac ;
+    border: 5px;
+    border-color: aliceblue;
+}
+
+.nav-link{
+    color: aliceblue;
+    font-family: 'Gabarito', sans-serif;
+    font-size: 20px;
+
+}
+
+.navbar-brand {
+    font-family: ANDYB;
+    color: #ce253d;
+    font-size: 40px;
+    padding-left: 20px;
+    text-shadow: 3px 3px 3px #e0e0e0;
+}
+
+
+
+.dropdown-menu{
+    background-color: black;
+}
+
+.dropdown-item{
+    color: white;
+}
+
+.nav{
+    padding-right: 20px;
+}
