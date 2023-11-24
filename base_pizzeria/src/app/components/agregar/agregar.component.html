@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar</title>
+    <h2>Agregar Producto</h2>
+</head>
+<body>
+    
+    <form (ngSubmit)="onSubmit()" #forPedido="ngForm" required>
+        <p>
+    
+            Nombre de la pizza
+            <input matInput name="nombre" [(ngModel)]="pedidoModel.nombre"
+                type="text"
+                placeholder="Nombre">
+            
+        </p>
+        <p>
+            Tamaño de la pizza
+            <select matInput name="size" id="size" [(ngModel)]="pedidoModel.size" type="text" placeholder="Size"required>
+                <option>Chica</option>
+                <option>Mediana</option>
+                <option>Grande</option>
+              </select>
+              
+            <!--<input matInput name="size" 
+                type="text"
+                placeholder="Size"> -->
+        
+        </p>
+        <p>
+            Precio de la Pizza
+            <input name="precio" [(ngModel)]="pedidoModel.precio" type="number">
+            
+        </p>
+      
+        <p>
+            <button type="submit" mat-flat-button color="accent" class="guardar-btn">Guardar</button>
+        </p>
+        <p>
+            <button (click)="volver()" type="button" class="volver-btn">Volver</button>
+        </p>
+    </form>
+    
+
+</body>
+</html>
+
+

@@ -1,0 +1,53 @@
+@font-face {
+    font-family: ANDYB;
+    src: url(../../../assets/fonts/ANDYB.TTF);
+}
+@font-face {
+    font-family: NovaSquare-Regular;
+    src: url(../../../assets/fonts/NovaSquare-Regular.ttf);
+}
+table{
+    font-family: NovaSquare-Regular;
+}
+h2 {
+    font-family: ANDYB;
+    text-align: center;
+    color: #ce253d ;
+  }
+
+  .tabla-productos {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  .tabla-productos th, .tabla-productos td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  .tabla-productos th {
+    background-color: #f2f2f2;
+  }
+
+  .tabla-productos tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+
+  .tabla-productos a {
+    text-decoration: none;
+    color: #3498db;
+  }
+
+  .tabla-productos button {
+    padding: 6px 10px;
+    cursor: pointer;
+    background-color: #ce253d ;
+    color: #fff;
+    border: none;
+  }
+
+  .tabla-productos button:hover {
+    background-color: #ce253d ;
+  }
